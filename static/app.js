@@ -7,6 +7,8 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const citySelect = document.getElementById("city-select");
 const addressInput = document.getElementById("address-input");
+const fontSizeSlider = document.getElementById("font-size-slider");
+const fontSizeValue = document.getElementById("font-size-value");
 const downloadBtn = document.getElementById("download-btn");
 
 let currentImage = null;
@@ -43,7 +45,7 @@ function render() {
   if (!address) return;
 
   const padding = canvas.width * 0.1;
-  const fontSize = Math.max(canvas.width * 0.05, 30);
+  const fontSize = parseInt(fontSizeSlider.value, 10);
 
   ctx.font = `bold ${fontSize}px sans-serif`;
   ctx.textAlign = "center";
@@ -73,6 +75,11 @@ citySelect.addEventListener("change", (e) => {
 });
 
 addressInput.addEventListener("input", render);
+
+fontSizeSlider.addEventListener("input", () => {
+  fontSizeValue.textContent = `${fontSizeSlider.value}px`;
+  render();
+});
 
 downloadBtn.addEventListener("click", () => {
   const link = document.createElement("a");
