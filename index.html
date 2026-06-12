@@ -1,73 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stammtisch Event Invite Generator</title>
-  <link href="static/bootstrap.min.css" rel="stylesheet">
-  <script src="static/bootstrap.min.js"></script>
-  <link href="static/app.css" rel="stylesheet">
-  <script src="static/app.js" defer></script>
-
-  <style>
-    * { font-family: 'IBM Plex Mono', monospace !important; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stammtisch Event Invite Generator</title>
+    <link href="static/bootstrap.min.css" rel="stylesheet">
+    <script src="static/bootstrap.min.js"></script>
+    <link href="static/app.css" rel="stylesheet">
+    <script src="static/app.js" defer></script>
 </head>
+
 <body class="min-vh-100 bg-light">
-  <div class="container py-5">
-    <h1 class="text-center mb-4">Event Invite Generator</h1>
+    <div class="container py-5">
+        <h1 class="text-center mb-4">Event Invite Generator</h1>
 
-    <div class="row">
-      <div class="col-md-6 col-12">
-        <div class="card shadow-sm mb-4">
-          <div class="card-body">
-            <div class="mb-3">
-              <label for="city-select" class="form-label">City</label>
-              <select id="city-select" class="form-select">
-                <option value="passau">Passau</option>
-                <option value="berlin">Berlin</option>
-              </select>
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="city-select" class="form-label">City</label>
+                            <select id="city-select" class="form-select">
+                                <option value="passau">Passau</option>
+                                <option value="berlin">Berlin</option>
+                                <option value="munich">Munich</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="address-input" class="form-label">Event Address</label>
+                            <input type="text" id="address-input" placeholder="e.g. Hauptstraße 12, 10115" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="font-size-slider" class="form-label">Font Size</label>
+                            <input type="range" id="font-size-slider" min="10" max="100" value="40" class="form-range" />
+                            <div class="text-muted small" id="font-size-value">40px</div>
+                        </div>
+
+                        <div>
+                            <button id="download-btn" class="btn btn-primary px-4">
+                                Download as PNG
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="mb-3">
-              <label for="address-input" class="form-label">Event Address</label>
-              <input
-                type="text"
-                id="address-input"
-                placeholder="e.g. Hauptstraße 12, 10115"
-                class="form-control"
-              />
+            <div class="col-md-6 col-12">
+                <div class="card shadow-sm">
+                    <div id="canvas-container" class="card-body text-center">
+                        <canvas id="canvas" class="w-100 rounded"></canvas>
+                    </div>
+                </div>
             </div>
-
-            <div class="mb-3">
-              <label for="font-size-slider" class="form-label">Font Size</label>
-              <input
-                type="range"
-                id="font-size-slider"
-                min="10"
-                max="100"
-                value="40"
-                class="form-range"
-              />
-              <div class="text-muted small" id="font-size-value">40px</div>
-            </div>
-
-            <div>
-              <button id="download-btn" class="btn btn-primary px-4">
-                Download as PNG
-              </button>
-            </div>
-          </div>
         </div>
-      </div>
-      <div class="col-md-6 col-12">
-        <div class="card shadow-sm">
-      <div class="card-body text-center" style="line-height: 0px;">
-        <canvas id="canvas" class="w-100 rounded"></canvas>
-      </div>
-        </div>
-      </div>
-    </div>    
-  </div>
+    </div>
 </body>
+
 </html>

@@ -1,7 +1,15 @@
 @font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('font/IBMPlexMono-Regular.ttf') format('truetype');
+    font-family: 'IBM Plex Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('font/IBMPlexMono-Regular.ttf') format('truetype');
+}
+
+body {
+    font-family: 'IBM Plex Mono', monospace !important;
+}
+
+#canvas-container {
+    line-height: 0px;
 }
