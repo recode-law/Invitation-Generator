@@ -30,7 +30,7 @@ function render() {
     ctx.fillStyle = "#e5e7eb";
     ctx.fillRect(0, 0, 500, 500);
     ctx.fillStyle = "#9ca3af";
-    ctx.font = "18px sans-serif";
+    ctx.font = "18px 'IBM Plex Mono'";
     ctx.textAlign = "center";
     ctx.fillText("No image loaded", 250, 250);
     return;
@@ -47,7 +47,7 @@ function render() {
   const padding = canvas.width * 0.1;
   const fontSize = parseInt(fontSizeSlider.value, 10);
 
-  ctx.font = `bold ${fontSize}px sans-serif`;
+  ctx.font = `${fontSize}px 'IBM Plex Mono'`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
 
