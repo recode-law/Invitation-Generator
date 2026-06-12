@@ -3,7 +3,7 @@
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url('font/IBMPlexMono-Regular.ttf') format('truetype');
+    src: url('IBMPlexMono-Regular.ttf') format('truetype');
 }
 
 body {
