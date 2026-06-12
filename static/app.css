@@ -13,3 +13,7 @@ body {
 #canvas-container {
     line-height: 0px;
 }
+
+.logo-img {
+    max-height: 80px;
+}
