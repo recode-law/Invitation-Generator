@@ -21,12 +21,15 @@ const addressEnabled = document.getElementById("adress-enabled");
 const addressInput = document.getElementById("address-input");
 const newMembersEnabled = document.getElementById("new-members-enabled");
 const overlayImageInput = document.getElementById("overlay-image-input");
-
 const downloadBtn = document.getElementById("download-btn");
+
+const recode_name_image = new Image();
+recode_name_image.src = "static/recode_name.svg";
 
 let currentImage = null;
 let currentCity = null;
 let overlayImage = null;
+
 
 function loadCityImage(cityKey) {
     return new Promise((resolve) => {
@@ -52,6 +55,8 @@ function setFontColor(color) {
 function render() {
     ctx.drawImage(currentImage, 0, 0, size, size);
 
+    ctx.drawImage(recode_name_image, 15, 15, recode_name_image.width * 0.5, recode_name_image.height * 0.5);
+
     if (overlayImage) {
         const overlaySize = 512;
         const paddingTop = 20;
@@ -75,7 +80,7 @@ function render() {
 
     setFontSize(60);
     setLetterSpacing(0);
-    setFontColor("#ffffff");
+    setFontColor("#e6e6e6");
     ctx.fillText(eventTypeInput.value, center, offset);
 
     setFontSize(120);
@@ -86,7 +91,7 @@ function render() {
 
     setFontSize(40);
     setLetterSpacing(0);
-    setFontColor("#ffffff");
+    setFontColor("#e6e6e6");
     offset += 110;
 
     if (personEnabled.checked) {
@@ -177,8 +182,8 @@ function initialise() {
     canvas.height = size;   
     ctx.textAlign = "center";
     ctx.textBaseline = "middle"; 
-    setCity("passau");
     dateInput.value = current_date();
+    setCity("passau");
 }
 
 document.fonts.ready.then(initialise);
