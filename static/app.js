@@ -99,6 +99,8 @@ function render() {
         ctx.fillText(personInput.value, center, offset);
         offset += 60;
     }
+
+    setFontSize(30);
     
     {
         date = new Date(dateInput.value);
@@ -114,14 +116,15 @@ function render() {
         ctx.fillText(`am ${day} ab ${time} Uhr` ,center, offset);
     }
 
-    offset += 60;
+    offset += 40;
     ctx.fillText(`Treffpunkt: ${pointInput.value}`, center, offset);
     
     if (addressEnabled.checked) {
-        offset += 60;
+        offset += 40;
         ctx.fillText(`(${addressInput.value})`, center, offset);
     }
 
+    setFontSize(40);
     offset = center + 460;
     if (newMembersEnabled.checked) {
         ctx.fillText("Auch für Nichtmitglieder!", center, offset);
