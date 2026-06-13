@@ -20,11 +20,13 @@ const pointInput = document.getElementById("point-input");
 const addressEnabled = document.getElementById("adress-enabled");
 const addressInput = document.getElementById("address-input");
 const newMembersEnabled = document.getElementById("new-members-enabled");
+const overlayImageInput = document.getElementById("overlay-image-input");
 
 const downloadBtn = document.getElementById("download-btn");
 
 let currentImage = null;
 let currentCity = null;
+let overlayImage = null;
 
 function loadCityImage(cityKey) {
     return new Promise((resolve) => {
@@ -49,6 +51,25 @@ function setFontColor(color) {
 
 function render() {
     ctx.drawImage(currentImage, 0, 0, size, size);
+
+    if (overlayImage) {
+        const overlaySize = 512;
+        const paddingTop = 20;
+        const paddingRight = -100;
+        const cx = size - overlaySize - paddingRight + overlaySize / 2;
+        const cy = paddingTop + overlaySize / 2;
+        const radius = overlaySize / 2;
+        const minDim = Math.min(overlayImage.width, overlayImage.height);
+        const sx = (overlayImage.width - minDim) / 2;
+        const sy = (overlayImage.height - minDim) / 2;
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.clip();
+        ctx.drawImage(overlayImage, sx, sy, minDim, minDim, cx - radius, cy - radius, overlaySize, overlaySize);
+        ctx.restore();
+    }
 
     let offset = center;
 
@@ -110,6 +131,22 @@ async function setCity(cityKey) {
 
 citySelect.addEventListener("change", (e) => {
     setCity(e.target.value);
+});
+
+overlayImageInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            const img = new Image();
+            img.onload = () => {
+                overlayImage = img;
+                render();
+            };
+            img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
 });
 
 eventTypeInput.addEventListener("input", render);
