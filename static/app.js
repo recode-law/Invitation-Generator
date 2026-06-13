@@ -21,6 +21,7 @@ const addressEnabled = document.getElementById("adress-enabled");
 const addressInput = document.getElementById("address-input");
 const newMembersEnabled = document.getElementById("new-members-enabled");
 const overlayImageInput = document.getElementById("overlay-image-input");
+const overlayImageClearButton = document.getElementById("overlay-image-clear-button");
 const downloadBtn = document.getElementById("download-btn");
 
 const recode_name_image = new Image();
@@ -138,6 +139,15 @@ citySelect.addEventListener("change", (e) => {
     setCity(e.target.value);
 });
 
+eventTypeInput.addEventListener("input", render);
+locationInput.addEventListener("input", render);
+personEnabled.addEventListener("input", render);
+personInput.addEventListener("input", render);
+dateInput.addEventListener("input", render);
+pointInput.addEventListener("input", render);
+addressEnabled.addEventListener("input", render);
+addressInput.addEventListener("input", render);
+
 overlayImageInput.addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -154,14 +164,12 @@ overlayImageInput.addEventListener("change", (e) => {
     }
 });
 
-eventTypeInput.addEventListener("input", render);
-locationInput.addEventListener("input", render);
-personEnabled.addEventListener("input", render);
-personInput.addEventListener("input", render);
-dateInput.addEventListener("input", render);
-pointInput.addEventListener("input", render);
-addressEnabled.addEventListener("input", render);
-addressInput.addEventListener("input", render);
+overlayImageClearButton.addEventListener("click", () => {
+    overlayImage = null;
+    overlayImageInput.value = null;
+    render();
+});
+
 newMembersEnabled.addEventListener("input", render);
 
 downloadBtn.addEventListener("click", () => {

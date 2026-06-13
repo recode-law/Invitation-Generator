@@ -73,7 +73,10 @@
 
                         <div class="mb-3">
                             <label for="overlay-image-input" class="form-label">Overlay Bild</label>
-                            <input type="file" id="overlay-image-input" class="form-control" accept="image/*">
+                            <div class="input-group">
+                                <input type="file" class="form-control" id="overlay-image-input">
+                                <button class="btn btn-outline-secondary" type="button" id="overlay-image-clear-button">Entfernen</button>
+                            </div>
                         </div>
 
                         <div class="form-check mb-3">
