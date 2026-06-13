@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="city-select" class="form-label">City</label>
+                            <label for="city-select" class="form-label">Standorthintergrund</label>
                             <select id="city-select" class="form-select">
                                 <option value="passau">Passau</option>
                                 <option value="berlin">Berlin</option>
@@ -43,7 +43,12 @@
 
                         <div class="mb-3">
                             <label for="person-input" class="form-label">Repräsentant:in</label>
-                            <input type="text" id="person-input" placeholder="Max Musterperson" class="form-control" />
+                            <div class="input-group">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" id="person-enabled" type="checkbox" checked />
+                                </div>
+                                <input type="text" id="person-input" placeholder="Max Musterperson" class="form-control" />
+                            </div>
                         </div>
 
                         <div class="mb-3">
