@@ -127,7 +127,7 @@ function render() {
     setFontSize(40);
     offset = center + 460;
     if (newMembersEnabled.checked) {
-        ctx.fillText("Auch für Nichtmitglieder!", center, offset);
+        ctx.fillText("Auch für Interessierte!", center, offset);
     }
 }
 
