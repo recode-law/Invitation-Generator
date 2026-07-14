@@ -126,6 +126,33 @@ function render() {
     if (newMembersEnabled.checked) {
         ctx.fillText("Auch für Interessierte!", centerx, format == "linkedin" ? 1120 : 1190);
     }
+
+    updateTextbox();
+}
+
+function updateTextbox() {
+    let location = pointInput.value;
+    if (addressEnabled.checked) {
+        location += ` (${addressInput.value})`
+    }
+
+    date = new Date(dateInput.value);
+    day = date.toLocaleString('de-de', { 
+        year: '2-digit', 
+        month: '2-digit', 
+        day: '2-digit',
+    });
+    time = date.toLocaleString('de-de', { 
+        hour: '2-digit', 
+        minute: '2-digit', 
+    });
+
+    const text = `📢 Einladung zum Recode Law Stammtisch in ${locationInput.value}
+Du interessierst dich für Recht, Innovation und Legal Tech oder möchtest einfach neue Leute aus der Community kennenlernen? Dann sei bei unserem nächsten Recode Law Stammtisch dabei!
+📍 Treffpunkt: ${location}
+🕒 Beginn: ${day} ab ${time} Uhr
+Freu dich auf einen lockeren Abend mit spannenden Gesprächen, neuen Perspektiven und der Gelegenheit, dich mit Studierenden, Berufseinsteiger*innen und Interessierten zu vernetzen.
+Der Stammtisch ist offen für alle – egal, ob du bereits Teil von Recode Law bist oder einfach einmal vorbeischauen möchtest. Wir freuen uns auf einen schönen Abend mit euch! ✨`;
 }
 
 async function updateFormat() {
