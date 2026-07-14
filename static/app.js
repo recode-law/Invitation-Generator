@@ -1,17 +1,23 @@
-const cities = {
-    passau: { label: "PASSAU", image: "images/passau.png" },
-    berlin: { label: "BERLIN", image: "images/berlin.png" },
-    munich: { label: "MÜNCHEN", image: "images/munich.png" }
+const backgrounds = {
+    bg1: { image: "1" },
+    bg2: { image: "2" },
+    bg3: { image: "3" },
+    bg4: { image: "4" },
+    bg5: { image: "5" },
+    bg6: { image: "6" },
+    bg7: { image: "7" }
 };
 
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-const size = 1024;
-const center = size / 2;
+let sizex = 1200;
+let sizey = 1200;
+let centerx = sizex / 2;
+let centery = sizey / 2;
 
 const eventTypeInput = document.getElementById("event-type-input");
-const citySelect = document.getElementById("city-select");
+const backgroundSelect = document.getElementById("background-select");
 const locationInput = document.getElementById("location-input");
 const personEnabled = document.getElementById("person-enabled");
 const personInput = document.getElementById("person-input");
@@ -24,20 +30,17 @@ const overlayImageInput = document.getElementById("overlay-image-input");
 const overlayImageClearButton = document.getElementById("overlay-image-clear-button");
 const downloadBtn = document.getElementById("download-btn");
 
-const recode_name_image = new Image();
-recode_name_image.src = "static/recode_name.svg";
-
 let currentImage = null;
-let currentCity = null;
+let currentBackground = null;
 let overlayImage = null;
 
 
-function loadCityImage(cityKey) {
+function loadBackgroundImage(backgroundKey) {
     return new Promise((resolve) => {
         const img = new Image();
         img.onload = () => resolve(img);
         img.onerror = () => resolve(null);
-        img.src = cities[cityKey].image;
+        img.src = `images/linkedin/${backgrounds[backgroundKey].image}.png`;
     });
 }
 
@@ -54,15 +57,13 @@ function setFontColor(color) {
 }
 
 function render() {
-    ctx.drawImage(currentImage, 0, 0, size, size);
-
-    ctx.drawImage(recode_name_image, 15, 15, recode_name_image.width * 0.5, recode_name_image.height * 0.5);
+    ctx.drawImage(currentImage, 0, 0, sizex, sizey);
 
     if (overlayImage) {
         const overlaySize = 512;
         const paddingTop = 20;
         const paddingRight = -100;
-        const cx = size - overlaySize - paddingRight + overlaySize / 2;
+        const cx = sizex - overlaySize - paddingRight + overlaySize / 2;
         const cy = paddingTop + overlaySize / 2;
         const radius = overlaySize / 2;
         const minDim = Math.min(overlayImage.width, overlayImage.height);
@@ -77,18 +78,18 @@ function render() {
         ctx.restore();
     }
 
-    let offset = center;
+    let offset = centery;
 
     setFontSize(60);
     setLetterSpacing(0);
     setFontColor("#e6e6e6");
-    ctx.fillText(eventTypeInput.value, center, offset);
+    ctx.fillText(eventTypeInput.value, centerx, offset);
 
     setFontSize(120);
     setLetterSpacing(30);
     setFontColor("#ff0000");
     offset += 100;
-    ctx.fillText(locationInput.value, center, offset);
+    ctx.fillText(locationInput.value, centerx, offset);
 
     setFontSize(40);
     setLetterSpacing(0);
@@ -96,7 +97,7 @@ function render() {
     offset += 110;
 
     if (personEnabled.checked) {
-        ctx.fillText(personInput.value, center, offset);
+        ctx.fillText(personInput.value, centerx, offset);
         offset += 60;
     }
 
@@ -113,33 +114,32 @@ function render() {
             hour: '2-digit', 
             minute: '2-digit', 
         });
-        ctx.fillText(`am ${day} ab ${time} Uhr` ,center, offset);
+        ctx.fillText(`am ${day} ab ${time} Uhr` ,centerx, offset);
     }
 
     offset += 40;
-    ctx.fillText(`Treffpunkt: ${pointInput.value}`, center, offset);
+    ctx.fillText(`Treffpunkt: ${pointInput.value}`, centerx, offset);
     
     if (addressEnabled.checked) {
         offset += 40;
-        ctx.fillText(`(${addressInput.value})`, center, offset);
+        ctx.fillText(`(${addressInput.value})`, centerx, offset);
     }
 
     setFontSize(40);
-    offset = center + 460;
+    offset = centery + 460;
     if (newMembersEnabled.checked) {
-        ctx.fillText("Auch für Interessierte!", center, offset);
+        ctx.fillText("Auch für Interessierte!", centerx, offset);
     }
 }
 
-async function setCity(cityKey) {
-    currentCity = cityKey;
-    locationInput.value = cities[cityKey].label;
-    currentImage = await loadCityImage(cityKey);
+async function setBackground(backgroundKey) {
+    currentBackground = backgroundKey;
+    currentImage = await loadBackgroundImage(backgroundKey);
     render();
 }
 
-citySelect.addEventListener("change", (e) => {
-    setCity(e.target.value);
+backgroundSelect.addEventListener("change", (e) => {
+    setBackground(e.target.value);
 });
 
 eventTypeInput.addEventListener("input", render);
@@ -177,7 +177,7 @@ newMembersEnabled.addEventListener("input", render);
 
 downloadBtn.addEventListener("click", () => {
     const link = document.createElement("a");
-    link.download = `invite-${currentCity}.png`;
+    link.download = `invite-${currentBackground}.png`;
     link.href = canvas.toDataURL("image/png");
     link.click();
 });
@@ -189,12 +189,12 @@ function current_date() {
 }
 
 function initialise() {
-    canvas.width = size;
-    canvas.height = size;   
+    canvas.width = sizex;
+    canvas.height = sizey;   
     ctx.textAlign = "center";
     ctx.textBaseline = "middle"; 
     dateInput.value = current_date();
-    setCity("passau");
+    setBackground("bg1");
 }
 
 document.fonts.ready.then(initialise);
