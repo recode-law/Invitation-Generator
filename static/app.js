@@ -30,6 +30,9 @@ const newMembersEnabled = document.getElementById("new-members-enabled");
 const overlayImageInput = document.getElementById("overlay-image-input");
 const overlayImageClearButton = document.getElementById("overlay-image-clear-button");
 const downloadBtn = document.getElementById("download-btn");
+const textBox = document.getElementById('text-box');
+const copyBtn = document.getElementById("copy-btn");
+
 
 let currentImage = null;
 let currentBackground = null;
@@ -124,7 +127,7 @@ function render() {
 
     setFontSize(40);
     if (newMembersEnabled.checked) {
-        ctx.fillText("Auch für Interessierte!", centerx, format == "linkedin" ? 1120 : 1190);
+        ctx.fillText("Auch für Interessiste!", centerx, format == "linkedin" ? 1120 : 1190);
     }
 
     updateTextbox();
@@ -147,12 +150,14 @@ function updateTextbox() {
         minute: '2-digit', 
     });
 
-    const text = `📢 Einladung zum Recode Law Stammtisch in ${locationInput.value}
+    const text = `<strong>📢 Einladung zum Recode Law Stammtisch in ${locationInput.value}</strong>
 Du interessierst dich für Recht, Innovation und Legal Tech oder möchtest einfach neue Leute aus der Community kennenlernen? Dann sei bei unserem nächsten Recode Law Stammtisch dabei!
-📍 Treffpunkt: ${location}
-🕒 Beginn: ${day} ab ${time} Uhr
+<strong>📍 Treffpunkt:</strong> ${location}
+<strong>🕒 Beginn:</strong> ${day} ab ${time} Uhr
 Freu dich auf einen lockeren Abend mit spannenden Gesprächen, neuen Perspektiven und der Gelegenheit, dich mit Studierenden, Berufseinsteiger*innen und Interessierten zu vernetzen.
 Der Stammtisch ist offen für alle – egal, ob du bereits Teil von Recode Law bist oder einfach einmal vorbeischauen möchtest. Wir freuen uns auf einen schönen Abend mit euch! ✨`;
+
+    textBox.innerHTML = text;
 }
 
 async function updateFormat() {
@@ -225,6 +230,26 @@ downloadBtn.addEventListener("click", () => {
     link.download = `invite-${currentBackground}.png`;
     link.href = canvas.toDataURL("image/png");
     link.click();
+});
+
+copyBtn.addEventListener("click", async () => {
+    try {
+      const html = textBox.innerHTML;
+      const text = textBox.textContent; 
+
+      const item = new ClipboardItem({
+        "text/html": new Blob([html], { type: "text/html" }),
+        "text/plain": new Blob([text], { type: "text/plain" })
+      });
+
+      await navigator.clipboard.write([item]);
+
+      copyBtn.textContent = "Kopiert!";
+      setTimeout(() => (copyBtn.textContent = "Text Kopieren"), 1200);
+    } catch (e) {
+      console.error("Rich copy failed, falling back:", e);
+      await navigator.clipboard.writeText(textBox.textContent);
+    }
 });
 
 function current_date() {
