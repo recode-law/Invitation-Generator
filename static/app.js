@@ -17,7 +17,7 @@ let sizey = 1200;
 let centerx = sizex / 2;
 let centery = sizey / 2;
 
-const formatSelect = document.getElementById("format-select");
+const formatRadios = document.querySelectorAll('input[name="format"]');
 const eventTypeInput = document.getElementById("event-type-input");
 const backgroundSelect = document.getElementById("background-select");
 const locationInput = document.getElementById("location-input");
@@ -135,7 +135,7 @@ function render() {
 }
 
 async function updateFormat() {
-    format = formatSelect.value;
+    format = Array.from(formatRadios).find(radio => radio.checked).value;
     if (format === "linkedin") {
         sizex = 1200;
         sizey = 1200;
@@ -160,7 +160,10 @@ backgroundSelect.addEventListener("change", (e) => {
     setBackground(e.target.value);
 });
 
-formatSelect.addEventListener("change", updateFormat);
+formatRadios.forEach(radio => {
+    radio.addEventListener("change", updateFormat);
+});
+
 eventTypeInput.addEventListener("input", render);
 locationInput.addEventListener("input", render);
 personEnabled.addEventListener("input", render);
