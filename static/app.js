@@ -11,11 +11,13 @@ const backgrounds = {
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+let format = "linkedin";
 let sizex = 1200;
 let sizey = 1200;
 let centerx = sizex / 2;
 let centery = sizey / 2;
 
+const formatSelect = document.getElementById("format-select");
 const eventTypeInput = document.getElementById("event-type-input");
 const backgroundSelect = document.getElementById("background-select");
 const locationInput = document.getElementById("location-input");
@@ -35,12 +37,12 @@ let currentBackground = null;
 let overlayImage = null;
 
 
-function loadBackgroundImage(backgroundKey) {
+function loadBackgroundImage() {
     return new Promise((resolve) => {
         const img = new Image();
         img.onload = () => resolve(img);
         img.onerror = () => resolve(null);
-        img.src = `images/linkedin/${backgrounds[backgroundKey].image}.png`;
+        img.src = `images/${format}/${backgrounds[currentBackground].image}.png`;
     });
 }
 
@@ -132,9 +134,25 @@ function render() {
     }
 }
 
+async function updateFormat() {
+    format = formatSelect.value;
+    if (format === "linkedin") {
+        sizex = 1200;
+        sizey = 1200;
+    } else if (format === "instagram") {
+        sizex = 1080;
+        sizey = 1350;
+    }
+    centerx = sizex / 2;
+    centery = sizey / 2;
+    canvas.width = sizex;
+    canvas.height = sizey;
+    setBackground(currentBackground || "bg1");
+}
+
 async function setBackground(backgroundKey) {
     currentBackground = backgroundKey;
-    currentImage = await loadBackgroundImage(backgroundKey);
+    currentImage = await loadBackgroundImage();
     render();
 }
 
@@ -142,6 +160,7 @@ backgroundSelect.addEventListener("change", (e) => {
     setBackground(e.target.value);
 });
 
+formatSelect.addEventListener("change", updateFormat);
 eventTypeInput.addEventListener("input", render);
 locationInput.addEventListener("input", render);
 personEnabled.addEventListener("input", render);
@@ -189,12 +208,10 @@ function current_date() {
 }
 
 function initialise() {
-    canvas.width = sizex;
-    canvas.height = sizey;   
     ctx.textAlign = "center";
     ctx.textBaseline = "middle"; 
     dateInput.value = current_date();
-    setBackground("bg1");
+    updateFormat();
 }
 
 document.fonts.ready.then(initialise);
