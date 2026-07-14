@@ -1,13 +1,12 @@
 const backgrounds = {
-    bg1: { image: "1" },
-    bg2: { image: "2" },
-    bg3: { image: "3" },
-    bg4: { image: "4" },
-    bg5: { image: "5" },
-    bg6: { image: "6" },
-    bg7: { image: "7" }
+    bg1: { image: "1", textColor: "#0f1f26", locationTextColor: "#e6e6e6" },
+    bg2: { image: "2", textColor: "#0f1f26", locationTextColor: "#fd402b"  },
+    bg3: { image: "3", textColor: "#fd402b", locationTextColor: "#0f1f26"  },
+    bg4: { image: "4", textColor: "#e6e6e6", locationTextColor: "#0f1f26"  },
+    bg5: { image: "5", textColor: "#e6e6e6", locationTextColor: "#fd402b"  },
+    bg6: { image: "6", textColor: "#fd402b", locationTextColor: "#e6e6e6"  },
+    bg7: { image: "7", textColor: "#e6e6e6", locationTextColor: "#fd402b"  }
 };
-
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -80,27 +79,25 @@ function render() {
         ctx.restore();
     }
 
-    let offset = centery;
+    const textColor = backgrounds[currentBackground].textColor;
+    const locationTextColor = backgrounds[currentBackground].locationTextColor;
 
     setFontSize(60);
     setLetterSpacing(0);
-    setFontColor("#e6e6e6");
-    ctx.fillText(eventTypeInput.value, centerx, offset);
+    setFontColor(textColor);
+    ctx.fillText(eventTypeInput.value, centerx, format == "linkedin" ? 610 : 725);
 
     setFontSize(120);
     setLetterSpacing(30);
-    setFontColor("#ff0000");
-    offset += 100;
-    ctx.fillText(locationInput.value, centerx, offset);
+    setFontColor(locationTextColor);
+    ctx.fillText(locationInput.value, centerx, format == "linkedin" ? 720 : 825);
 
     setFontSize(40);
     setLetterSpacing(0);
-    setFontColor("#e6e6e6");
-    offset += 110;
+    setFontColor(textColor);
 
     if (personEnabled.checked) {
-        ctx.fillText(personInput.value, centerx, offset);
-        offset += 60;
+        ctx.fillText(personInput.value, centerx, format == "linkedin" ? 835 : 925);
     }
 
     setFontSize(30);
@@ -116,21 +113,18 @@ function render() {
             hour: '2-digit', 
             minute: '2-digit', 
         });
-        ctx.fillText(`am ${day} ab ${time} Uhr` ,centerx, offset);
+        ctx.fillText(`am ${day} ab ${time} Uhr` ,centerx, format == "linkedin" ? 960 : 1040);
     }
 
-    offset += 40;
-    ctx.fillText(`Treffpunkt: ${pointInput.value}`, centerx, offset);
+    ctx.fillText(`Treffpunkt: ${pointInput.value}`, centerx, format == "linkedin" ? 1020 : 1090);
     
     if (addressEnabled.checked) {
-        offset += 40;
-        ctx.fillText(`(${addressInput.value})`, centerx, offset);
+        ctx.fillText(`(${addressInput.value})`, centerx, format == "linkedin" ? 1070 : 1140);
     }
 
     setFontSize(40);
-    offset = centery + 460;
     if (newMembersEnabled.checked) {
-        ctx.fillText("Auch für Interessierte!", centerx, offset);
+        ctx.fillText("Auch für Interessierte!", centerx, format == "linkedin" ? 1120 : 1190);
     }
 }
 
@@ -147,6 +141,8 @@ async function updateFormat() {
     centery = sizey / 2;
     canvas.width = sizex;
     canvas.height = sizey;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle"; 
     setBackground(currentBackground || "bg1");
 }
 
@@ -211,8 +207,6 @@ function current_date() {
 }
 
 function initialise() {
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle"; 
     dateInput.value = current_date();
     updateFormat();
 }
