@@ -234,8 +234,8 @@ downloadBtn.addEventListener("click", () => {
 
 copyBtn.addEventListener("click", async () => {
     try {
-      const html = textBox.innerHTML;
-      const text = textBox.textContent; 
+      const html = textBox.innerHTML.replace(/\n/g, "<br>");
+      const text = textBox.textContent;
 
       const item = new ClipboardItem({
         "text/html": new Blob([html], { type: "text/html" }),
