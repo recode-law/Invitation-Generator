@@ -127,7 +127,7 @@ function render() {
 
     setFontSize(40);
     if (newMembersEnabled.checked) {
-        ctx.fillText("Auch für Interessiste!", centerx, format == "linkedin" ? 1120 : 1190);
+        ctx.fillText("Auch für Interessierte!", centerx, format == "linkedin" ? 1120 : 1190);
     }
 
     updateTextbox();
