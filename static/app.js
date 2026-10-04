@@ -110,7 +110,7 @@ function render() {
     modifyFont(120, "bold");
     setLetterSpacing(30);
     setFontColor(locationTextColor);
-    ctx.fillText(locationInput.value, centerx, format == "linkedin" ? 720 : 825);
+    ctx.fillText(locationInput.value.toUpperCase(), centerx, format == "linkedin" ? 720 : 825);
 
     modifyFont(40, "bold");
     setLetterSpacing(0);
