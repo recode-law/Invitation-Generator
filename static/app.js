@@ -149,7 +149,7 @@ function render() {
 
     modifyFont(40, "bold");
     if (newMembersEnabled.checked) {
-        ctx.fillText("Auch für Interessierte!", centerx, format == "linkedin" ? 1120 : 1190);
+        ctx.fillText("Offen für alle Interessierten!", centerx, format == "linkedin" ? 1120 : 1190);
     }
 
     updateTextbox();
