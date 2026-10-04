@@ -48,8 +48,25 @@ function loadBackgroundImage() {
     });
 }
 
-function setFontSize(fontSize) {
-    ctx.font = `${fontSize}px 'IBM Plex Mono'`;
+function modifyFont(fontSize, modifier = "") {
+    ctx.font = `${modifier} ${fontSize}px 'IBM Plex Mono'`.trim();
+}
+
+// Draws differently styled parts of one line, centered as a whole around x.
+function fillMixedText(parts, fontSize, x, y) {
+    ctx.save();
+    const widths = parts.map(({ text, modifier }) => {
+        modifyFont(fontSize, modifier);
+        return ctx.measureText(text).width;
+    });
+    let left = x - widths.reduce((a, b) => a + b, 0) / 2;
+    ctx.textAlign = "left";
+    parts.forEach(({ text, modifier }, i) => {
+        modifyFont(fontSize, modifier);
+        ctx.fillText(text, left, y);
+        left += widths[i];
+    });
+    ctx.restore();
 }
 
 function setLetterSpacing(spacing) {
@@ -85,17 +102,17 @@ function render() {
     const textColor = backgrounds[currentBackground].textColor;
     const locationTextColor = backgrounds[currentBackground].locationTextColor;
 
-    setFontSize(60);
+    modifyFont(60, "bold");
     setLetterSpacing(0);
     setFontColor(textColor);
     ctx.fillText(eventTypeInput.value, centerx, format == "linkedin" ? 610 : 725);
 
-    setFontSize(120);
+    modifyFont(120, "bold");
     setLetterSpacing(30);
     setFontColor(locationTextColor);
     ctx.fillText(locationInput.value, centerx, format == "linkedin" ? 720 : 825);
 
-    setFontSize(40);
+    modifyFont(40, "bold");
     setLetterSpacing(0);
     setFontColor(textColor);
 
@@ -103,8 +120,8 @@ function render() {
         ctx.fillText(personInput.value, centerx, format == "linkedin" ? 835 : 925);
     }
 
-    setFontSize(30);
-    
+    modifyFont(30, "bold");
+
     {
         date = new Date(dateInput.value);
         day = date.toLocaleString('de-de', { 
@@ -116,7 +133,12 @@ function render() {
             hour: '2-digit', 
             minute: '2-digit', 
         });
-        ctx.fillText(`am ${day} ab ${time} Uhr` ,centerx, format == "linkedin" ? 960 : 1040);
+        fillMixedText([
+            { text: "am ", modifier: "" },
+            { text: `${day} `, modifier: "bold" },
+            { text: "ab ", modifier: "" },
+            { text: `${time} Uhr`, modifier: "bold" },
+        ], 30, centerx, format == "linkedin" ? 960 : 1040);
     }
 
     ctx.fillText(`Treffpunkt: ${pointInput.value}`, centerx, format == "linkedin" ? 1020 : 1090);
@@ -125,7 +147,7 @@ function render() {
         ctx.fillText(`(${addressInput.value})`, centerx, format == "linkedin" ? 1070 : 1140);
     }
 
-    setFontSize(40);
+    modifyFont(40, "bold");
     if (newMembersEnabled.checked) {
         ctx.fillText("Auch für Interessierte!", centerx, format == "linkedin" ? 1120 : 1190);
     }
