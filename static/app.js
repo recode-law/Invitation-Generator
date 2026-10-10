@@ -81,9 +81,9 @@ function render() {
     ctx.drawImage(currentImage, 0, 0, sizex, sizey);
 
     if (overlayImage) {
-        const overlaySize = 512;
-        const paddingTop = 20;
-        const paddingRight = -100;
+        const overlaySize = format == "linkedin" ? 620 : 640;
+        const paddingTop = format == "linkedin" ? -80: -50;
+        const paddingRight = format == "linkedin" ? -100 : -140;
         const cx = sizex - overlaySize - paddingRight + overlaySize / 2;
         const cy = paddingTop + overlaySize / 2;
         const radius = overlaySize / 2;
