@@ -10,7 +10,7 @@ const backgrounds = {
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-let format = "linkedin";
+let format = "instagram";
 let sizex = 1200;
 let sizey = 1200;
 let centerx = sizex / 2;
